@@ -3,7 +3,6 @@ import { computed } from '@ember/object';
 import { camelize, classify } from '@ember/string';
 import { run } from '@ember/runloop';
 import BaseLayer from 'ember-leaflet/components/base-layer';
-import BaseLayer from 'ember-leaflet/components/base-layer';
 
 export default BaseLayer.extend({
   enableDeleting: true, // Default value
