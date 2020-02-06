@@ -1,5 +1,5 @@
 {
-  "name": "ember-leaflet-draw",
+  "name": "ember-leaflet-draw-controls",
   "version": "0.7.2",
   "description": "Provides feature drawing functionality for Ember-Leaflet, based on wrapping the Leaflet Draw library",
   "directories": {
@@ -11,7 +11,7 @@
     "start": "ember server",
     "test": "ember try:each"
   },
-  "repository": "https://github.com/dumb-Ledore/ember-leaflet-draw",
+  "repository": "https://github.com/dumb-Ledore/ember-leaflet-draw-controls",
   "engines": {
     "node": ">= 0.10.0"
   },

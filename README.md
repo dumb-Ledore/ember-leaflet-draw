@@ -9,7 +9,7 @@ This plugin is based on the JS library [Leaflet Draw] and basically wraps it int
 
 ## Installation
 
-* `ember install ember-leaflet-draw`
+* `ember install ember-leaflet-draw-controls`
 
 ## Using the Addon
 
