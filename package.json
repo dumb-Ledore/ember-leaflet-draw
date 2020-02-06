@@ -1,6 +1,6 @@
 {
   "name": "ember-leaflet-draw-controls",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "description": "Provides feature drawing functionality for Ember-Leaflet, based on wrapping the Leaflet Draw library",
   "directories": {
     "doc": "doc",
