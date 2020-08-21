@@ -11,6 +11,11 @@ This plugin is based on the JS library [Leaflet Draw] and basically wraps it int
 
 * `ember install ember-leaflet-draw-controls`
 
+## Compatibility
+
+* Ember.js v2.18 or above
+* Ember CLI v2.13 or above
+
 ## Using the Addon
 
 For greater detail, view the [Documentation](https://stevenheinrich.github.io/ember-leaflet-draw/docs/overview) with working examples.
