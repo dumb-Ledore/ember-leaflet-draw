@@ -1,6 +1,6 @@
-/*jshint node:true*/
+'use strict';
 module.exports = {
-  description: 'add leaflet-draw assets, using npm',
+  description: 'add leaflet-draw assets to package.json',
 
   normalizeEntityName: function() {}, // no-op since we're just adding dependencies
 
