@@ -1,9 +1,9 @@
-/*jshint node:true*/
-/* global require, module */
-var EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
+'use strict';
+
+const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
 module.exports = function(defaults) {
-  var app = new EmberAddon(defaults, {
+  let app = new EmberAddon(defaults, {
     // Add options here
     'ember-font-awesome': {
       'useLess': true
@@ -13,7 +13,7 @@ module.exports = function(defaults) {
     },
     'lessOptions': {
       'paths': [
-        'bower_components/semantic-ui/src',
+        'node_modules/semantic-ui/src',
         'app/styles'
       ]
     },

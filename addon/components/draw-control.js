@@ -9,29 +9,33 @@ export default BaseLayer.extend({
   enableEditing: true, // Default value
   showDrawingLayer: true, // Default value
 
-  leafletEvents: [
-    L.Draw.Event.CREATED,
-    L.Draw.Event.EDITED,
-    L.Draw.Event.EDITMOVE,
-    L.Draw.Event.EDITRESIZE,
-    L.Draw.Event.EDITSTART,
-    L.Draw.Event.EDITSTOP,
-    L.Draw.Event.EDITVERTEX,
-    L.Draw.Event.DELETED,
-    L.Draw.Event.DELETESTART,
-    L.Draw.Event.DELETESTOP,
-    L.Draw.Event.DRAWSTART,
-    L.Draw.Event.DRAWSTOP,
-    L.Draw.Event.DRAWVERTEX
-  ],
+  init() {
+    this._super(...arguments);
 
-  leafletOptions: [
-    'draw',
-    'edit',
-    'enableEditing',
-    'position',
-    'showDrawingLayer'
-  ],
+    this.set('leafletEvents', [
+      L.Draw.Event.CREATED,
+      L.Draw.Event.EDITED,
+      L.Draw.Event.EDITMOVE,
+      L.Draw.Event.EDITRESIZE,
+      L.Draw.Event.EDITSTART,
+      L.Draw.Event.EDITSTOP,
+      L.Draw.Event.EDITVERTEX,
+      L.Draw.Event.DELETED,
+      L.Draw.Event.DELETESTART,
+      L.Draw.Event.DELETESTOP,
+      L.Draw.Event.DRAWSTART,
+      L.Draw.Event.DRAWSTOP,
+      L.Draw.Event.DRAWVERTEX
+    ]);
+
+    this.set('leafletOptions', [
+      'draw',
+      'edit',
+      'enableEditing',
+      'position',
+      'showDrawingLayer'
+    ]);
+  },
 
   usedLeafletEvents: computed('leafletEvents', function() {
     return this.get('leafletEvents').filter(eventName => {
