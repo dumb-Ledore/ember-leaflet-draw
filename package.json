@@ -35,10 +35,10 @@
     "ember-cli-htmlbars": "^3.0.0",
     "ember-composability-tools": "^0.0.12",
     "ember-invoke-action": "^1.4.0",
+    "font-awesome": "~4.7.0",
     "leaflet": "^1.6.0",
     "leaflet-draw": "^1.0.4",
-    "semantic-ui": "^2.4.2",
-    "font-awesome": "~4.7.0"
+    "semantic-ui": "^2.4.2"
   },
   "devDependencies": {
     "@ember/optional-features": "^0.6.3",

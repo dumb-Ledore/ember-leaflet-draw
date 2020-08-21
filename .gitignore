@@ -25,3 +25,7 @@
 # deploy info
 /settings
 deploy_key
+
+/semantic/*
+!/semantic/src/site/*
+!/semantic/src/theme.config
