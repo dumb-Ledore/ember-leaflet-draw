@@ -1,12 +1,14 @@
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test, setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import DrawControlComponent from 'ember-leaflet-draw/components/draw-control';
+import DrawControlComponent from 'ember-leaflet-draw-controls/components/draw-control';
 let drawControl;
 
-moduleForComponent('draw-control', 'Integration | Component | draw control', {
-  integration: true,
-  beforeEach() {
-    this.register('component:draw-control', DrawControlComponent.extend({
+module('Integration | Component | draw control', function(hooks) {
+  setupRenderingTest(hooks);
+
+  hooks.beforeEach(function() {
+    this.owner.register('component:draw-control', DrawControlComponent.extend({
       init() {
         this._super(...arguments);
         drawControl = this;
@@ -22,23 +24,22 @@ moduleForComponent('draw-control', 'Integration | Component | draw control', {
 
     // Handle any actions with this.on('myAction', function(val) { ... });
 
-  }
-});
+  });
 
-test('it renders', function(assert) {
-  assert.expect(3);
+  test('it renders', async function(assert) {
+    assert.expect(3);
 
-  this.render(hbs`
+    await render(hbs`
     {{#leaflet-map lat=lat lng=lng zoom=zoom}}
       {{draw-control}}
     {{/leaflet-map}}
   `);
 
-  // Ensure draw-control is not empty
-  assert.notEqual(this.$('.leaflet-draw.leaflet-control').text().trim(), '');
+    // Ensure draw-control is not empty
+    assert.notEqual(this.element.querySelector('.leaflet-draw.leaflet-control').textContent.trim(), '');
 
-  // Template block usage:
-  this.render(hbs`
+    // Template block usage:
+    await render(hbs`
     {{#leaflet-map lat=lat lng=lng zoom=zoom}}
       {{#draw-control}}
         <span class="test-insertion">template block text</span>
@@ -46,205 +47,206 @@ test('it renders', function(assert) {
     {{/leaflet-map}}
   `);
 
-  // Ensure draw-control is not empty
-  assert.notEqual(this.$('.leaflet-draw.leaflet-control').text().trim(), '');
+    // Ensure draw-control is not empty
+    assert.notEqual(this.element.querySelector('.leaflet-draw.leaflet-control').textContent.trim(), '');
 
-  // Ensure nested element is found
-  assert.equal(this.$('.test-insertion').text().trim(), 'template block text');
-});
+    // Ensure nested element is found
+    assert.equal(this.element.querySelector('.test-insertion').textContent.trim(), 'template block text');
+  });
 
-test('it responds to boolean option for enableEditing', function(assert) {
-  assert.expect(2);
+  test('it responds to boolean option for enableEditing', async function(assert) {
+    assert.expect(2);
 
-  // Template block usage: (can't enableEditing without showDrawingLayer set to true)
-  this.render(hbs`
+    // Template block usage: (can't enableEditing without showDrawingLayer set to true)
+    await render(hbs`
     {{#leaflet-map lat=lat lng=lng zoom=zoom}}
       {{draw-control enableEditing=true showDrawingLayer=true}}
     {{/leaflet-map}}
   `);
 
-  // Ensure draw-control enables enableEditing
-  assert.ok(this.$('.leaflet-draw.leaflet-control .leaflet-draw-edit-edit').length, "setting enableEditing to true fails to render edit button");
+    // Ensure draw-control enables enableEditing
+    assert.ok(this.element.querySelectorAll('.leaflet-draw.leaflet-control .leaflet-draw-edit-edit').length, "setting enableEditing to true fails to render edit button");
 
-  // Template block usage: (set showDrawingLayer to true to prove that enableEditing as false works)
-  this.render(hbs`
+    // Template block usage: (set showDrawingLayer to true to prove that enableEditing as false works)
+    await render(hbs`
     {{#leaflet-map lat=lat lng=lng zoom=zoom}}
       {{draw-control enableEditing=false showDrawingLayer=true}}
     {{/leaflet-map}}
   `);
 
-  // Ensure draw-control disables enableEditing
-  assert.notOk(this.$('.leaflet-draw.leaflet-control .leaflet-draw-edit-edit').length, "setting enableEditing to false fails to hide edit button");
+    // Ensure draw-control disables enableEditing
+    assert.notOk(this.element.querySelectorAll('.leaflet-draw.leaflet-control .leaflet-draw-edit-edit').length, "setting enableEditing to false fails to hide edit button");
 
-});
+  });
 
-test('it responds to boolean option for enableEditing', function(assert) {
-  assert.expect(2);
+  test('it responds to boolean option for enableEditing', async function(assert) {
+    assert.expect(2);
 
-  // Template block usage: (can't enableDeleting without showDrawingLayer set to true)
-  this.render(hbs`
-    {{#leaflet-map lat=lat lng=lng zoom=zoom}}
-      {{draw-control enableDeleting=true showDrawingLayer=true}}
-    {{/leaflet-map}}
-  `);
+    // Template block usage: (can't enableDeleting without showDrawingLayer set to true)
+    await render(hbs`
+      {{#leaflet-map lat=lat lng=lng zoom=zoom}}
+        {{draw-control enableDeleting=true showDrawingLayer=true}}
+      {{/leaflet-map}}
+    `);
 
-  // Ensure draw-control enables enableDeleting
-  assert.ok(this.$('.leaflet-draw.leaflet-control .leaflet-draw-edit-remove').length, "setting enableDeleting to true fails to render delete button");
+    // Ensure draw-control enables enableDeleting
+    assert.ok(this.element.querySelectorAll('.leaflet-draw.leaflet-control .leaflet-draw-edit-remove').length, "setting enableDeleting to true fails to render delete button");
 
-  // Template block usage: (set showDrawingLayer to true to prove that enableDeleting as false works)
-  this.render(hbs`
-    {{#leaflet-map lat=lat lng=lng zoom=zoom}}
-      {{draw-control enableDeleting=false showDrawingLayer=true}}
-    {{/leaflet-map}}
-  `);
+    // Template block usage: (set showDrawingLayer to true to prove that enableDeleting as false works)
+    await render(hbs`
+      {{#leaflet-map lat=lat lng=lng zoom=zoom}}
+        {{draw-control enableDeleting=false showDrawingLayer=true}}
+      {{/leaflet-map}}
+    `);
 
-  // Ensure draw-control disables enableDeleting
-  assert.notOk(this.$('.leaflet-draw.leaflet-control .leaflet-draw-edit-remove').length, "setting enableDeleting to false fails to hide delete button");
+    // Ensure draw-control disables enableDeleting
+    assert.notOk(this.element.querySelectorAll('.leaflet-draw.leaflet-control .leaflet-draw-edit-remove').length, "setting enableDeleting to false fails to hide delete button");
 
-});
+  });
 
-test('it has default value for enableEditing set to true', function(assert) {
-  assert.expect(2);
+  test('it has default value for enableEditing set to true', async function(assert) {
+    assert.expect(2);
 
-  // Template block usage: (set showDrawingLayer to true to prove that enableEditing defaults false)
-  this.render(hbs`
-    {{#leaflet-map lat=lat lng=lng zoom=zoom}}
-      {{draw-control showDrawingLayer=true}}
-    {{/leaflet-map}}
-  `);
+    // Template block usage: (set showDrawingLayer to true to prove that enableEditing defaults false)
+    await render(hbs`
+      {{#leaflet-map lat=lat lng=lng zoom=zoom}}
+        {{draw-control showDrawingLayer=true}}
+      {{/leaflet-map}}
+    `);
 
-  // Ensure draw-control defaults to enabling enableEditing
-  assert.ok(this.$('.leaflet-draw.leaflet-control .leaflet-draw-edit-edit').length, "default enableEditing should be true and not render edit button");
-  assert.ok(this.$('.leaflet-draw.leaflet-control .leaflet-draw-edit-remove').length, "setting enableEditing should be true and not render delete button");
+    // Ensure draw-control defaults to enabling enableEditing
+    assert.ok(this.element.querySelectorAll('.leaflet-draw.leaflet-control .leaflet-draw-edit-edit').length, "default enableEditing should be true and not render edit button");
+    assert.ok(this.element.querySelectorAll('.leaflet-draw.leaflet-control .leaflet-draw-edit-remove').length, "setting enableEditing should be true and not render delete button");
 
-});
+  });
 
-test('it responds to boolean option for showDrawingLayer', function(assert) {
-  assert.expect(2);
+  test('it responds to boolean option for showDrawingLayer', async function(assert) {
+    assert.expect(2);
 
-  // Template block usage:
-  this.render(hbs`
-    {{#leaflet-map lat=lat lng=lng zoom=zoom}}
-      {{draw-control showDrawingLayer=true}}
-    {{/leaflet-map}}
-  `);
+    // Template block usage:
+    await render(hbs`
+      {{#leaflet-map lat=lat lng=lng zoom=zoom}}
+        {{draw-control showDrawingLayer=true}}
+      {{/leaflet-map}}
+    `);
 
-  // Ensure draw-control enables showDrawingLayer. If enabled, _layer will be created.
-  assert.ok(drawControl._layer, 'failed to find drawing layer');
+    // Ensure draw-control enables showDrawingLayer. If enabled, _layer will be created.
+    assert.ok(drawControl._layer, 'failed to find drawing layer');
 
-  // Template block usage:
-  this.render(hbs`
-    {{#leaflet-map lat=lat lng=lng zoom=zoom}}
-      {{draw-control showDrawingLayer=false}}
-    {{/leaflet-map}}
-  `);
+    // Template block usage:
+    await render(hbs`
+      {{#leaflet-map lat=lat lng=lng zoom=zoom}}
+        {{draw-control showDrawingLayer=false}}
+      {{/leaflet-map}}
+    `);
 
-  // Ensure draw-control disables showDrawingLayer. If disabled, _layer will not be created.
-  assert.notOk(drawControl._layer, 'failed to find drawing layer');
-});
+    // Ensure draw-control disables showDrawingLayer. If disabled, _layer will not be created.
+    assert.notOk(drawControl._layer, 'failed to find drawing layer');
+  });
 
-test('it needs showDrawingLayer to be true for enableEditing to work', function(assert) {
-  assert.expect(4);
+  test('it needs showDrawingLayer to be true for enableEditing to work', async function(assert) {
+    assert.expect(4);
 
-  // Template block usage:
-  this.render(hbs`
-    {{#leaflet-map lat=lat lng=lng zoom=zoom}}
-      {{draw-control showDrawingLayer=true enableEditing=true}}
-    {{/leaflet-map}}
-  `);
+    // Template block usage:
+    await render(hbs`
+      {{#leaflet-map lat=lat lng=lng zoom=zoom}}
+        {{draw-control showDrawingLayer=true enableEditing=true}}
+      {{/leaflet-map}}
+    `);
 
-  // Ensure draw-control enables showDrawingLayer. If enabled (while edit is defaulted/true) the edit buttons will display becaue there is a layer to edit.
-  assert.ok(this.$('.leaflet-draw.leaflet-control .leaflet-draw-edit-edit').length, "setting showDrawingLayer to true fails to render edit button");
-  assert.ok(this.$('.leaflet-draw.leaflet-control .leaflet-draw-edit-remove').length, "setting showDrawingLayer to true fails to render delete button");
+    // Ensure draw-control enables showDrawingLayer. If enabled (while edit is defaulted/true) the edit buttons will display becaue there is a layer to edit.
+    assert.ok(this.element.querySelectorAll('.leaflet-draw.leaflet-control .leaflet-draw-edit-edit').length, "setting showDrawingLayer to true fails to render edit button");
+    assert.ok(this.element.querySelectorAll('.leaflet-draw.leaflet-control .leaflet-draw-edit-remove').length, "setting showDrawingLayer to true fails to render delete button");
 
-  // Template block usage:
-  this.render(hbs`
-    {{#leaflet-map lat=lat lng=lng zoom=zoom}}
-      {{draw-control showDrawingLayer=false enableEditing=true}}
-    {{/leaflet-map}}
-  `);
+    // Template block usage:
+    await render(hbs`
+      {{#leaflet-map lat=lat lng=lng zoom=zoom}}
+        {{draw-control showDrawingLayer=false enableEditing=true}}
+      {{/leaflet-map}}
+    `);
 
-  // Ensure draw-control disables showDrawingLayer. If disabled (while edit is defaulted/true) the edit buttons will not display becaue there is no layer to edit.
-  assert.notOk(this.$('.leaflet-draw.leaflet-control .leaflet-draw-edit-edit').length, "setting showDrawingLayer to false fails to hide edit button");
-  assert.notOk(this.$('.leaflet-draw.leaflet-control .leaflet-draw-edit-remove').length, "setting showDrawingLayer to false fails to hide delete button");
-});
+    // Ensure draw-control disables showDrawingLayer. If disabled (while edit is defaulted/true) the edit buttons will not display becaue there is no layer to edit.
+    assert.notOk(this.element.querySelectorAll('.leaflet-draw.leaflet-control .leaflet-draw-edit-edit').length, "setting showDrawingLayer to false fails to hide edit button");
+    assert.notOk(this.element.querySelectorAll('.leaflet-draw.leaflet-control .leaflet-draw-edit-remove').length, "setting showDrawingLayer to false fails to hide delete button");
+  });
 
-test('it has default value for showDrawingLayer set to true', function(assert) {
-  assert.expect(1);
+  test('it has default value for showDrawingLayer set to true', async function(assert) {
+    assert.expect(1);
 
-  // Template block usage:
-  this.render(hbs`
-    {{#leaflet-map lat=lat lng=lng zoom=zoom}}
-      {{draw-control}}
-    {{/leaflet-map}}
-  `);
+    // Template block usage:
+    await render(hbs`
+      {{#leaflet-map lat=lat lng=lng zoom=zoom}}
+        {{draw-control}}
+      {{/leaflet-map}}
+    `);
 
-  // Ensure draw-control enables showDrawingLayer. If enabled, _layer will be created.
-  assert.ok(drawControl._layer, 'should have found drawing layer');
-});
+    // Ensure draw-control enables showDrawingLayer. If enabled, _layer will be created.
+    assert.ok(drawControl._layer, 'should have found drawing layer');
+  });
 
-test('it responds to all options for position', function(assert) {
-  assert.expect(4);
+  test('it responds to all options for position', async function(assert) {
+    assert.expect(4);
 
-  // Set new position to topleft
-  this.set('position', 'topleft');
+    // Set new position to topleft
+    this.set('position', 'topleft');
 
-  this.render(hbs`
-    {{#leaflet-map lat=lat lng=lng zoom=zoom}}
-      {{draw-control position=position}}
-    {{/leaflet-map}}
-  `);
+    await render(hbs`
+      {{#leaflet-map lat=lat lng=lng zoom=zoom}}
+        {{draw-control position=position}}
+      {{/leaflet-map}}
+    `);
 
-  // Ensure draw-control is in topleft location
-  assert.ok(this.$('.leaflet-top.leaflet-left .leaflet-draw.leaflet-control').length, "topleft location fails");
+    // Ensure draw-control is in topleft location
+    assert.ok(this.element.querySelectorAll('.leaflet-top.leaflet-left .leaflet-draw.leaflet-control').length, "topleft location fails");
 
-  // Set new position to topright
-  this.set('position', 'topright');
+    // Set new position to topright
+    this.set('position', 'topright');
 
-  this.render(hbs`
-    {{#leaflet-map lat=lat lng=lng zoom=zoom}}
-      {{draw-control position=position}}
-    {{/leaflet-map}}
-  `);
+    await render(hbs`
+      {{#leaflet-map lat=lat lng=lng zoom=zoom}}
+        {{draw-control position=position}}
+      {{/leaflet-map}}
+    `);
 
-  // Ensure draw-control is in topright location
-  assert.ok(this.$('.leaflet-top.leaflet-right .leaflet-draw.leaflet-control').length, "topright location fails");
+    // Ensure draw-control is in topright location
+    assert.ok(this.element.querySelectorAll('.leaflet-top.leaflet-right .leaflet-draw.leaflet-control').length, "topright location fails");
 
-  // Set new position to bottomleft
-  this.set('position', 'bottomleft');
+    // Set new position to bottomleft
+    this.set('position', 'bottomleft');
 
-  this.render(hbs`
-    {{#leaflet-map lat=lat lng=lng zoom=zoom}}
-      {{draw-control position=position}}
-    {{/leaflet-map}}
-  `);
+    await render(hbs`
+      {{#leaflet-map lat=lat lng=lng zoom=zoom}}
+        {{draw-control position=position}}
+      {{/leaflet-map}}
+    `);
 
-  // Ensure draw-control is in bottomleft location
-  assert.ok(this.$('.leaflet-bottom.leaflet-left .leaflet-draw.leaflet-control').length, "bottomleft location fails");
+    // Ensure draw-control is in bottomleft location
+    assert.ok(this.element.querySelectorAll('.leaflet-bottom.leaflet-left .leaflet-draw.leaflet-control').length, "bottomleft location fails");
 
-  // Set new position to bottomright
-  this.set('position', 'bottomright');
+    // Set new position to bottomright
+    this.set('position', 'bottomright');
 
-  this.render(hbs`
-    {{#leaflet-map lat=lat lng=lng zoom=zoom}}
-      {{draw-control position=position}}
-    {{/leaflet-map}}
-  `);
+    await render(hbs`
+      {{#leaflet-map lat=lat lng=lng zoom=zoom}}
+        {{draw-control position=position}}
+      {{/leaflet-map}}
+    `);
 
-  // Ensure draw-control is in bottomright location
-  assert.ok(this.$('.leaflet-bottom.leaflet-right .leaflet-draw.leaflet-control').length, "bottomright location fails");
-});
+    // Ensure draw-control is in bottomright location
+    assert.ok(this.element.querySelectorAll('.leaflet-bottom.leaflet-right .leaflet-draw.leaflet-control').length, "bottomright location fails");
+  });
 
-test('it has default value for position set to topleft', function(assert) {
-  assert.expect(1);
+  test('it has default value for position set to topleft', async function(assert) {
+    assert.expect(1);
 
-  // Template block usage:
-  this.render(hbs`
-    {{#leaflet-map lat=lat lng=lng zoom=zoom}}
-      {{draw-control}}
-    {{/leaflet-map}}
-  `);
+    // Template block usage:
+    await render(hbs`
+      {{#leaflet-map lat=lat lng=lng zoom=zoom}}
+        {{draw-control}}
+      {{/leaflet-map}}
+    `);
 
-  // Ensure draw-control is in topleft location
-  assert.ok(this.$('.leaflet-top.leaflet-left .leaflet-draw.leaflet-control').length, "defaulting to topleft location fails");
+    // Ensure draw-control is in topleft location
+    assert.ok(this.element.querySelectorAll('.leaflet-top.leaflet-left .leaflet-draw.leaflet-control').length, "defaulting to topleft location fails");
+  });
 });

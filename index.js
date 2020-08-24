@@ -1,11 +1,10 @@
-/* jshint node: true */
 'use strict';
 const resolve = require('resolve');
 const path = require('path');
 const Funnel = require('broccoli-funnel');
 
 module.exports = {
-  name: 'ember-leaflet-draw-controls',
+  name: require('./package').name,
 
   treeForVendor: function() {
     let dist = path.join(this.pathBase('leaflet-draw'), 'dist');
